@@ -12,6 +12,14 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**', // Allows any image host for your assignment
+      },
+    ],
+  },
 };
 
 export default nextConfig;

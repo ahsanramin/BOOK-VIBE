@@ -1,26 +1,146 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@custom-variant dark (&:where(.dark, .dark *));
+@theme {
+    --color-primary: #10b981;
+    --color-secondary: #06b6d4;
+    --color-accent: #8b5cf6;
+    --color-pink: #ec4899;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        cursor: none;
+        /* LIGHT MODE: Red/Rose Background */
+        background-color: #fff1f2;
+        transition: background-color 0.5s ease;
+    }
+    /* DARK MODE: Deep Green Background */
+    .dark html {
+        background-color: #022c22;
+    }
+    a,
+    button,
+    input,
+    textarea,
+    [role="button"] {
+        cursor: none;
+    }
+    body {
+        @apply antialiased overflow-x-hidden;
+        color: #18181b;
+        /* zinc-900 */
+    }
+    .dark body {
+        color: #f0fdf4;
+        /* emerald-50 */
+    }
+    /* Custom Premium Scrollbar */
+     ::-webkit-scrollbar {
+        width: 10px;
+    }
+     ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    /* Red Scrollbar for Light Mode */
+     ::-webkit-scrollbar-thumb {
+        background: linear-gradient(to bottom, #ef4444, #ec4899);
+        border-radius: 9999px;
+    }
+    /* Green Scrollbar for Dark Mode */
+    .dark ::-webkit-scrollbar-thumb {
+        background: linear-gradient(to bottom, #10b981, #06b6d4);
+        border-radius: 9999px;
+    }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@layer utilities {
+    /* Light Mode: Red Grid */
+    .bg-grid-pattern {
+        background-size: 40px 40px;
+        background-image: linear-gradient(to right, rgba(239, 68, 68, 0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(239, 68, 68, 0.08) 1px, transparent 1px);
+    }
+    /* Dark Mode: Green Grid */
+    .dark .bg-grid-pattern {
+        background-image: linear-gradient(to right, rgba(16, 185, 129, 0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(16, 185, 129, 0.1) 1px, transparent 1px);
+    }
+    /* Light Mode Glass */
+    .glass-premium {
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        box-shadow: 0 8px 32px rgba(239, 68, 68, 0.1);
+    }
+    /* Dark Mode Glass */
+    .dark .glass-premium {
+        background: rgba(2, 44, 34, 0.6);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    }
+    .text-gradient-colorful {
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        background-image: linear-gradient(to right, #ef4444, #ec4899, #8b5cf6, #06b6d4, #10b981);
+        background-size: 300% auto;
+        animation: shine 6s linear infinite;
+    }
+    .glow-emerald {
+        box-shadow: 0 0 50px -10px rgba(16, 185, 129, 0.6);
+    }
+    .glow-purple {
+        box-shadow: 0 0 50px -10px rgba(139, 92, 246, 0.6);
+    }
+    .glow-pink {
+        box-shadow: 0 0 50px -10px rgba(236, 72, 153, 0.6);
+    }
+    .glow-red {
+        box-shadow: 0 0 50px -10px rgba(239, 68, 68, 0.6);
+    }
+    .glow-cyan {
+        box-shadow: 0 0 50px -10px rgba(6, 182, 212, 0.6);
+    }
+    .card-rainbow-border {
+        position: relative;
+        background: white;
+        border-radius: 2rem;
+        z-index: 0;
+    }
+    .dark .card-rainbow-border {
+        background: #022c22;
+    }
+    .card-rainbow-border::before {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        border-radius: 2rem;
+        background: linear-gradient(45deg, #ef4444, #ec4899, #8b5cf6, #06b6d4, #10b981);
+        background-size: 300% 300%;
+        z-index: -1;
+        animation: border-glow 4s ease infinite;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .card-rainbow-border:hover::before {
+        opacity: 1;
+    }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes shine {
+    to {
+        background-position: 300% center;
+    }
+}
+
+@keyframes border-glow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
